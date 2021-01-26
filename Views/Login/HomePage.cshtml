@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HomePage</title>
+</head>
+<body>
+    <div>
+        <h3 style="color :red">Hello @ViewBag.fullname</h3>
+        <h4>@Html.ActionLink("Log-Out", "LogOut", "Login")</h4>
+    </div>
+    <div>
+        <h2>Home Page!</h2>
+        <h3> Menu:</h3>
+
+        <ul>
+            <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
+            <li>@Html.ActionLink("Departments", "Index", "Department")</li>
+            <li>@Html.ActionLink("Shifts", "Index", "Shift")</li>
+        </ul>
+    </div>
+</body>
+</html>

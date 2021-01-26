@@ -1,0 +1,31 @@
+﻿@model FactoryManagmentWeb.Models.EmployeeShift
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddShiftToEmployee</title>
+</head>
+<body>
+    <div>
+        <h3 style="color :red">Hello @ViewBag.fullname</h3>
+        <h4>@Html.ActionLink("Log-Out", "LogOut", "Login")</h4>
+    </div>
+    <div>
+
+        <form action="/Employee/GetNewEmployeeShiftFromUser" method="post">
+            Employee ID: @Html.TextBoxFor(x => x.EmployeeID, new { Value = ViewBag.id })<br />
+            Shift ID: @Html.TextBoxFor(x => x.ShiftID)<br />
+
+            <input type="submit" value="Update" />
+        </form>
+    </div>
+    <div>
+        <h4>@Html.ActionLink("Back", "Index", "Employee")</h4>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Employees</title>
+</head>
+<body>
+    <div>
+        <h3 style="color :red">Hello @ViewBag.fullname</h3>
+        <h4>@Html.ActionLink("Log-Out", "LogOut", "Login")</h4>
+    </div>
+    <div style=" text-align:center ">
+
+        <h3>Employees List</h3>
+
+        <table border="1" style="margin-left:auto;margin-right:auto;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Start Work Year</th>
+                    <th scope="col">Department ID</th>
+                    <th scope="col">Shift</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in ViewBag.employees)
+            {
+                <tr>
+                    <td>@item.ID</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.StratWorkYear</td>
+                    <td>@item.DepartmentID</td>
+                    <td>
+                        <ul>
+                            @foreach (var x in ViewBag.employeesShift)
+                            {
+                                if (item.ID == x.EmployeeID)
+                                {
+                                    foreach (var i in ViewBag.shift)
+                                    {
+                                        if (x.ShiftID == i.ID)
+                                        {
+                                            <li>@i.Date.ToString("dd/MM/yyyy") @i.StartTime - @i.EndTime</li>
+
+                                        }
+                                    }
+
+                                }
+
+                            }
+                        </ul>
+                    </td>
+                    <td>@Html.ActionLink("Edit", "EditEmployee", new { id = item.ID })</td>
+                    <td>@Html.ActionLink("Delete", "DeleteEmployee", new { id = item.ID })</td>
+                    <td>@Html.ActionLink("Add Shift", "AddShiftToEmployee", new { id = item.ID })</td>
+                </tr>
+            }
+
+        </table>
+        <div>
+            <h4>Search by First Name or Last Name or Department</h4>
+            <form action="/Employee/SearchResult" method="post">
+
+                <input name="phrase" type="text" />
+                <input type="submit" value="Search" />
+            </form>
+        </div>
+
+    </div>
+    <div>
+        <h4>@Html.ActionLink("Back", "Home", "Login")</h4>
+    </div>
+</body>
+</html>

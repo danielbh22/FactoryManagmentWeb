@@ -1,0 +1,32 @@
+﻿@model FactoryManagmentWeb.Models.Department
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditDepartment</title>
+</head>
+<body>
+    <div>
+        <h3 style="color :red">Hello @ViewBag.fullname</h3>
+        <h4>@Html.ActionLink("Log-Out", "LogOut", "Login")</h4>
+    </div>
+    <div>
+        <h3> Edit Department</h3>
+
+        <form action="/Department/GetUpdateDepartmentFromUser" method="post">
+            ID:@Html.EditorFor(x => x.ID)<br />
+            Department Name: @Html.EditorFor(x => x.Name)<br />
+            Manager ID: @Html.EditorFor(x => x.Manager)<br />
+            <input type="submit" value="Update" />
+        </form>
+    </div>
+    <div>
+        <h4>@Html.ActionLink("Back", "Index", "Department")</h4>
+    </div>
+</body>
+</html>

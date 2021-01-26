@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = null;
+    bool flag = false;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Departments</title>
+</head>
+<body>
+    <div>
+        <h3 style="color :red" >Hello @ViewBag.fullname</h3>
+        <h4>@Html.ActionLink("Log-Out", "LogOut", "Login")</h4>
+    </div>
+    <div style=" text-align:center " > 
+        <h3>Deparments List</h3>
+
+        <table style="margin-left:auto;margin-right:auto;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Manager</th>
+                </tr>
+            </thead>
+            @foreach (var item in ViewBag.departments)
+            {
+        <tr>
+            <td>@item.ID</td>
+            <td>@item.Name</td>
+            <td>@item.Manager</td>
+            <td>@Html.ActionLink("Edit", "EditDepartment", new { id = item.ID })</td>
+
+            @foreach (var emp in ViewBag.employees)
+            {
+                if (emp.DepartmentID == item.ID)
+                {
+                    flag = false;
+                    break;
+                }
+                else
+                {
+                    flag = true;
+                    continue;
+                }
+
+            }
+            @if (flag)
+            {
+                <td>@Html.ActionLink("Delete", "DeleteDepartment", new { id = item.ID })</td>
+            }
+
+        </tr>
+            }
+
+        </table>
+
+        <h4>@Html.ActionLink("Add Department", "AddDepartment")</h4>
+
+
+    </div>
+    <div>
+        <h4>@Html.ActionLink("Back", "Home", "Login")</h4>
+    </div>
+</body>
+</html>

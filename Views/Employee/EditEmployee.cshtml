@@ -1,0 +1,37 @@
+﻿@model FactoryManagmentWeb.Models.Employee
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditEmployee</title>
+</head>
+<body>
+    <div>
+        <h3 style="color :red">Hello @ViewBag.fullname</h3>
+        <h4>@Html.ActionLink("Log-Out", "LogOut", "Login")</h4>
+    </div>
+    <div>
+        <h3> Edit Employee</h3>
+
+        <form action="/Employee/GetUpdateEmployeeFromUser" method="post">
+            ID:@Html.EditorFor(x => x.ID)<br />
+            First Name: @Html.EditorFor(x => x.FirstName)<br />
+            Last Name: @Html.EditorFor(x => x.LastName)<br />
+            Start Work Year: @Html.EditorFor(x => x.StratWorkYear)<br />
+            Department ID: @Html.DropDownListFor(x => x.DepartmentID, new SelectList(ViewBag.Departments, "ID", "Name")) <br />
+
+
+
+            <input type="submit" value="Update" />
+        </form>
+    </div>
+    <div>
+        <h4>@Html.ActionLink("Back", "Index", "Employee")</h4>
+    </div>
+</body>
+</html>

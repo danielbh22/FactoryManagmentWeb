@@ -1,0 +1,67 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Shifts</title>
+</head>
+<body>
+    <div>
+        <h3 style="color :red">Hello @ViewBag.fullname</h3>
+        <h4>@Html.ActionLink("Log-Out", "LogOut", "Login")</h4>
+    </div>
+    <div>
+        <h3>Shifts List</h3>
+
+        <table border="1">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Strat Time</th>
+                    <th scope="col">End Time</th>
+                    <th scope="col">Employee Name</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in ViewBag.shifts)
+            {
+        <tr>
+            <td>@item.ID</td>
+            <td>@item.Date.ToString("dd/MM/yyyy")</td>
+            <td>@item.StartTime</td>
+            <td>@item.EndTime</td>
+            @foreach (var x in ViewBag.employeesShift)
+            {
+                if (item.ID == x.ShiftID)
+                {
+                    foreach (var emp in ViewBag.employeeList)
+                    {
+                        if (x.EmployeeID == emp.ID)
+                        {
+                            <td>@Html.ActionLink((string)emp.FirstName, "EditEmployee", "Employee", new { id = x.EmployeeID }, null)</td>
+
+                        }
+                    }
+
+                }
+
+            }
+
+        </tr>
+            }
+
+        </table>
+
+        <h4>@Html.ActionLink("Add Shift", "AddShift")</h4>
+    </div>
+    <div>
+        <h4>@Html.ActionLink("Back", "Home", "Login")</h4>
+    </div>
+</body>
+</html>

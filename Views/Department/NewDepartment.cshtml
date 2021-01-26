@@ -1,0 +1,32 @@
+﻿@model FactoryManagmentWeb.Models.Department
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NewDepartment</title>
+</head>
+<body>
+    <div>
+        <h3 style="color :red">Hello @ViewBag.fullname</h3>
+        <h4>@Html.ActionLink("Log-Out", "LogOut", "Login")</h4>
+    </div>
+    <div>
+        <h3> Add Department</h3>
+
+        <form action="/Department/GetNewDepartmentFromUser" method="post">
+            ID:@Html.TextBoxFor(x => x.ID)<br />
+            Department Name: @Html.TextBoxFor(x => x.Name)<br />
+            Manager ID: @Html.TextBoxFor(x => x.Manager)<br />
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+    <div>
+        <h4>@Html.ActionLink("Back", "Index", "Department")</h4>
+    </div>
+</body>
+</html>
