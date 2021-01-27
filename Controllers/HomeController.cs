@@ -12,7 +12,7 @@ namespace FactoryManagmentWeb.Controllers
         {
             if (Session["authenticated"] != null)
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
             else
             {

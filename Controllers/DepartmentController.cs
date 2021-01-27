@@ -13,11 +13,24 @@ namespace FactoryManagmentWeb.Controllers
 
         static EmployeeBL employeeBL = new EmployeeBL();
 
+        static UserAccessBL userAccessBL = new UserAccessBL();
+
+        static UserBL userBL = new UserBL();
+
         // GET: Department
         public ActionResult Index()
         {
-            if (Session["authenticated"] != null && (bool)Session["authenticated"] == true)
+            if ((bool)Session["authenticated"] == true && (int)Session["numOfAction"] > 0)
             {
+                ///update number of actions
+                var userID = (int)Session["userID"];
+
+                var userAcc = userAccessBL.GetUserAccess(userID);
+                Session["numOfAction"] = userAcc.NumOfActions -1;
+                userAccessBL.UpdateUserAccessNum(userAcc);
+                userBL.UpdateUserNumOfAction(userID);
+
+
                 ViewBag.fullname = Session["fullname"];
 
                 var departmentsList = departmentBL.GetDepartments();
@@ -37,10 +50,18 @@ namespace FactoryManagmentWeb.Controllers
 
         public ActionResult EditDepartment(int id)
         {
-            if (Session["authenticated"] != null && (bool)Session["authenticated"] == true)
+            if ((bool)Session["authenticated"] == true && (int)Session["numOfAction"] > 0)
             {
                 ViewBag.fullname = Session["fullname"];
-              
+
+                var userID = (int)Session["userID"];
+
+                var userAcc = userAccessBL.GetUserAccess(userID);
+                Session["numOfAction"] = userAcc.NumOfActions - 1;
+                userAccessBL.UpdateUserAccessNum(userAcc);
+                userBL.UpdateUserNumOfAction(userID);
+
+
                 Department dep = departmentBL.GetDepartments(id);
                 return View("EditDepartment",dep);
                
@@ -55,7 +76,7 @@ namespace FactoryManagmentWeb.Controllers
         [HttpPost]
         public ActionResult GetUpdateDepartmentFromUser(Department dep)
         {
-            if (Session["authenticated"] != null && (bool)Session["authenticated"] == true)
+            if ( (bool)Session["authenticated"] == true && (int)Session["numOfAction"] > 0)
             {
                 ViewBag.fullname = Session["fullname"];
                 
@@ -72,7 +93,7 @@ namespace FactoryManagmentWeb.Controllers
 
         public ActionResult DeleteDepartment(int id)
         {
-            if (Session["authenticated"] != null && (bool)Session["authenticated"] == true)
+            if ( (bool)Session["authenticated"] == true && (int)Session["numOfAction"] > 0)
             {
                 ViewBag.fullname = Session["fullname"];
                 
@@ -90,7 +111,7 @@ namespace FactoryManagmentWeb.Controllers
         [HttpPost]
         public ActionResult GetNewDepartmentFromUser(Department dep)
         {
-            if (Session["authenticated"] != null && (bool)Session["authenticated"] == true)
+            if ( (bool)Session["authenticated"] == true && (int)Session["numOfAction"] > 0)
             {
                 ViewBag.fullname = Session["fullname"];
         
@@ -107,10 +128,19 @@ namespace FactoryManagmentWeb.Controllers
 
         public ActionResult AddDepartment()
         {
-            if (Session["authenticated"] != null && (bool)Session["authenticated"] == true)
+            if ( (bool)Session["authenticated"] == true && (int)Session["numOfAction"] > 0)
             {
                 ViewBag.fullname = Session["fullname"];
-    
+
+                var userID = (int)Session["userID"];
+
+                var userAcc = userAccessBL.GetUserAccess(userID);
+                Session["numOfAction"] = userAcc.NumOfActions - 1;
+                userAccessBL.UpdateUserAccessNum(userAcc);
+                userBL.UpdateUserNumOfAction(userID);
+
+
+
                 return View("NewDepartment");
 
             }

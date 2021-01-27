@@ -30,5 +30,6 @@ namespace FactoryManagmentWeb.Models
         public virtual DbSet<EmployeeShift> EmployeeShifts { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserAccess> UserAccesses { get; set; }
     }
 }

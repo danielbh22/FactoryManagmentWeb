@@ -10,10 +10,11 @@ namespace FactoryManagmentWeb.Controllers
     public class LoginController : Controller
     {
         public UserBL userBL = new UserBL();
+        public UserAccessBL userAccessBL = new UserAccessBL();
         // GET: Login
         public ActionResult Index()
         {
-            //Session["authenticated"] = false;
+            Session["authenticated"] = false;
             return View("Login");
         }
 
@@ -25,7 +26,7 @@ namespace FactoryManagmentWeb.Controllers
 
         public ActionResult Home()
         {
-            if (Session["authenticated"] != null && (bool)Session["authenticated"] == true)
+            if ( (bool)Session["authenticated"] == true)
             {
                 ViewBag.fullname = Session["fullname"];
 
@@ -41,16 +42,51 @@ namespace FactoryManagmentWeb.Controllers
         [HttpPost]
         public ActionResult GetLoginData(string userName, string password)
         {
+
             var isAuth = userBL.IsAuthenticated(userName, password);
             if (isAuth == true)
             {
-                Session["authenticated"] = true;
-                Session["counter"] = 5;
-                Session["date"] = "";
+ 
+                var date = DateTime.Now;
+                var user = userBL.GetUser(userName, password);
+                
+                Session["userID"] = user.ID;
+                Session["numOfAction"] = user.NumOfAction;
+                Session["fullname"] = user.FullName;
 
-                var userFullName = userBL.GetFullName(userName, password);
-                Session["fullname"] = userFullName;
 
+                var userAcc = userAccessBL.GetUserAccess(user.ID);
+                
+                if (userAcc != null && userAcc.Date.ToString("MM/dd/yyyy") != date.ToString("MM/dd/yyyy"))
+                {
+                    userAccessBL.DeleteUserAction(user.ID);
+                    Session["numOfAction"] = 5;
+                }
+
+                if (userAcc!= null && (int)Session["numOfAction"] <= 0)
+                {
+                    Console.WriteLine("too many actions try tomorrow");
+
+                    Session["authenticated"] = false;
+                    return RedirectToAction("Index", "Login");
+                }
+                else
+                {
+                    if (userAcc == null )
+                    {
+                        Session["authenticated"] = true;
+                        UserAccess access = new UserAccess() { UserID = user.ID, Date = date, NumOfActions = (int)Session["numOfAction"] };
+                        userAccessBL.AddUserAccess(access);
+                    }
+                    else
+                    {
+                        if(userAcc != null && (int)Session["numOfAction"] > 0)
+                        {
+                            Session["authenticated"] = true;
+                        }
+                    }
+
+                }
                 return RedirectToAction ("Home", "Login");
             }
             else

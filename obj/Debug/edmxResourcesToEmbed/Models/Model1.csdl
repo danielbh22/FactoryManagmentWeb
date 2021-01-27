@@ -51,5 +51,15 @@
     <EntitySet Name="EmployeeShifts" EntityType="Self.EmployeeShift" />
     <EntitySet Name="Shifts" EntityType="Self.Shift" />
     <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserAccesses" EntityType="FactoryManagementDBModel.UserAccess" />
   </EntityContainer>
+  <EntityType Name="UserAccess">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="NumOfActions" Type="Int32" Nullable="false" />
+  </EntityType>
 </Schema>

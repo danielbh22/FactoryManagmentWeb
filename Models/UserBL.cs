@@ -24,13 +24,19 @@ namespace FactoryManagmentWeb.Models
             }
         }
 
-        public string GetFullName (string userName, string pwd)
+        public User GetUser(string userName, string pwd)
         {
-            var result = db.Users.Where(x => x.UserName == userName && x.Password == pwd);
+            User result = db.Users.Where(x => x.UserName == userName && x.Password == pwd).First();
 
-            var fullname = result.First().FullName;
+            return result;
+        }
 
-            return fullname;
+        public void UpdateUserNumOfAction(int userID)
+        {
+            User u = db.Users.Where(x => x.ID == userID).First();
+            int num = u.NumOfAction - 1;
+            u.NumOfAction = num;
+            db.SaveChanges();
         }
     }
 }
