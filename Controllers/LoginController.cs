@@ -60,7 +60,6 @@ namespace FactoryManagmentWeb.Controllers
                 if (userAcc != null && userAcc.Date.ToString("MM/dd/yyyy") != date.ToString("MM/dd/yyyy"))
                 {
                     userAccessBL.DeleteUserAction(user.ID);
-                    Session["numOfAction"] = 5;
                 }
 
                 if (userAcc!= null && (int)Session["numOfAction"] <= 0)
@@ -74,9 +73,11 @@ namespace FactoryManagmentWeb.Controllers
                 {
                     if (userAcc == null )
                     {
+                        Session["numOfAction"] = 5;
                         Session["authenticated"] = true;
                         UserAccess access = new UserAccess() { UserID = user.ID, Date = date, NumOfActions = (int)Session["numOfAction"] };
                         userAccessBL.AddUserAccess(access);
+                        userBL.ResetUserNumOfAction((int)Session["userID"]);
                     }
                     else
                     {

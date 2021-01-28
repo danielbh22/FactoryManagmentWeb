@@ -38,5 +38,12 @@ namespace FactoryManagmentWeb.Models
             u.NumOfAction = num;
             db.SaveChanges();
         }
+
+        public void ResetUserNumOfAction(int userID)
+        {
+            User u = db.Users.Where(x => x.ID == userID).First();
+            u.NumOfAction = 5;
+            db.SaveChanges();
+        }
     }
 }
