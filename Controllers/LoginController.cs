@@ -71,7 +71,7 @@ namespace FactoryManagmentWeb.Controllers
                 }
                 else
                 {
-                    if (userAcc == null )
+                    if (userAcc == null || userAcc == null && (int)Session["numOfAction"] > 0)
                     {
                         Session["numOfAction"] = 5;
                         Session["authenticated"] = true;
